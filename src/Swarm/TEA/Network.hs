@@ -18,7 +18,9 @@ import Swarm.TEA.Types
 
 
 -- | Compiles and actuates the TEA network with provided initial state, update function
--- and state file accessor. 
+-- and state file accessor.
+--
+-- Returns a function to fire a message into the network.
 installNetwork :: Store seral
                => (actual, seral)
                -- ^ Initial state.
@@ -27,11 +29,12 @@ installNetwork :: Store seral
                -> (seral -> FilePath)
                -- ^ State file accessor, denoting where the serialziable part of the state
                -- should be stored.
-               -> IO ()
+               -> IO (message -> IO ())
 installNetwork initState uf stateFile = do
   es <- newAddHandler
   nd <- compile (networkDescription es initState uf stateFile)
   actuate nd
+  return (fire es)
 
 -- | Generalized network description mimicing The Elm Architecture. The state consists
 -- of two parts, where one part can be serialized. One needs to provide an update function.
