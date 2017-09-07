@@ -1,0 +1,43 @@
+name:                swarm-tea
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/aphorisme/swarm-tea#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Philipp Pfeiffer
+maintainer:          pfiff@posteo.de
+copyright:           (c)opyright 2017 Philipp Pfeiffer
+category:            Language
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Swarm.TEA
+                     , Swarm.TEA.Types
+                     , Swarm.TEA.Network
+  build-depends:       base >= 4.7 && < 5
+                     -- reactivity:
+                     , reactive-banana
+                     -- storing, text
+                     , bytestring
+                     , store
+                     -- exceptions:
+                     , safe-exceptions
+  default-language:    Haskell2010
+  ghc-options:       -Wall -O2 -fno-warn-unused-do-bind -fno-warn-orphans    
+
+test-suite swarm-tea-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , swarm-tea
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/aphorisme/swarm-tea
