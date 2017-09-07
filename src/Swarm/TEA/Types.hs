@@ -39,9 +39,9 @@ reactReporting bstate erepo =
 
 
 -- | Asynchronous actions, which may fire a message.
-type AsyncAction message = EventSource message -> IO ()
+type AsyncAction message = (message -> IO ()) -> IO ()
 
-reactAsync :: EventSource message -> Event (AsyncAction message) -> MomentIO ()
+reactAsync :: (message -> IO ()) -> Event (AsyncAction message) -> MomentIO ()
 reactAsync es ev =
   reactimate ((\act -> act es) <$> ev)
 

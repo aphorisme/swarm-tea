@@ -83,7 +83,7 @@ networkDescription es initState update stateFile = mdo
   
   -- actimate async operations:
   reactReporting bState eReport
-  reactAsync es eAsync
+  reactAsync (fire es) eAsync
 
   -- serialize the serializable part on change:
   reactimate $ trySerializeState <$> eSeralChange
