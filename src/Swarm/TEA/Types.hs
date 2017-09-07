@@ -8,6 +8,7 @@ module Swarm.TEA.Types
   , Reporting
   , reactReporting
   , AsyncAction
+  , withRaise
   , reactAsync
   -- * Updating Function
   , UpdateFunction
@@ -40,6 +41,10 @@ reactReporting bstate erepo =
 
 -- | Asynchronous actions, which may fire a message.
 type AsyncAction message = (message -> IO ()) -> IO ()
+
+-- | Defines a 'AsyncAction' by providing the @raise@ action. 
+withRaise :: ((message -> IO ()) -> IO ()) -> AsyncAction message
+withRaise = id
 
 reactAsync :: (message -> IO ()) -> Event (AsyncAction message) -> MomentIO ()
 reactAsync es ev =
